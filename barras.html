@@ -1,0 +1,45 @@
+<canvas width="600" height="400"></canvas>
+
+<script>
+//funcion para dibujar rectangulo definiendo el pincel y el lienzo
+    function dibujarRectangulo(x, y, base, altura, color) {
+        var pantalla = document.querySelector("canvas");
+        var pincel = pantalla.getContext("2d");
+
+        pincel.fillStyle=color;
+        pincel.fillRect(x,y, base, altura);
+        pincel.strokeStyle="black";
+        pincel.strokeRect(x,y, base, altura);
+    }
+// funcion para escribi texto en el lienzo sin instancia
+    function escribirTexto(x , y, texto) {
+        var pantalla = document.querySelector("canvas");
+        var pincel = pantalla.getContext("2d");
+
+        pincel.font="15px Georgia";
+        pincel.fillStyle="black";
+        pincel.fillText(texto, x, y);    
+    }
+//funcion que recibe cinco valores que definen la barras 
+    function dibujarBarra(x, y, serie, colores, texto) {
+//llamada de la funcion escribir texto que resta 10 pixeles a la posicion de la barra 
+        escribirTexto(x, y - 10, texto);
+
+        var sumaAltura = 0;
+//loop usado para definir la altura de las barras y dibujar los rectangulos uno de bajo del otro
+//para formar la barra con la serie de datos definida
+        for (var i = 0; i < serie.length; i++) {
+            var altura = serie[i];
+            dibujarRectangulo(x, y + sumaAltura, 50, altura, colores[i]);
+            sumaAltura = sumaAltura + altura;
+        }
+    }
+
+    var colores = ["blue","green","yellow", "red","gray"];
+    var serie2009 = [6,47,41,3,3];
+    var serie2019 = [81,9,3,3,4];
+
+    dibujarBarra(50, 50, serie2009, colores, "2009");
+    dibujarBarra(150, 50, serie2019, colores, "2019");
+
+</script>
